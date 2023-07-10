@@ -1,0 +1,19 @@
+package com.parimi.studentservices.service;
+
+import com.parimi.studentservices.model.Course;
+import com.parimi.studentservices.model.StudentRegisteredCourse;
+import com.parimi.studentservices.repository.DbRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+@Service
+public class StudentService {
+
+    @Autowired
+    private DbRepository dbRepository;
+
+   public List<StudentRegisteredCourse> retrieveCourses(String studentId) {
+       return dbRepository.getCourses(studentId);
+    }
+}
