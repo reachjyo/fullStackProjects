@@ -2,6 +2,7 @@ package com.parimi.studentservices.config;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +17,19 @@ import javax.sql.DataSource;
 @Configuration
 public class DbConfig {
 
+   /* @Value("jdbc.jdbcUrl")
+    private String dbUrl;
+    @Value("jdbc.username")
+    private String dbUserName;
+
+    @Value("jdbc.password")
+    private String dbPassword;
+
+    @Value("jdbc.driver-class-name")
+    private String driverClass;*/
+
     @Bean(name="dataSource")
-    //@ConfigurationProperties(prefix="jdbc")
+    @ConfigurationProperties(prefix="jdbc")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
@@ -25,7 +37,6 @@ public class DbConfig {
         dataSource.setUsername("postgresql");
         dataSource.setPassword("postgresql");
         return dataSource;
-        // return DataSourceBuilder.create().type(org.apache.tomcat.jdbc.pool.DataSource.class).build();
     }
 
     @Bean(name ="namedParameterJdbcTemplate")

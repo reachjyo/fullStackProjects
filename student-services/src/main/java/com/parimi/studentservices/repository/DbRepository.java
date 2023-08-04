@@ -48,4 +48,24 @@ public class DbRepository {
                                                 params, new StudentCourseMapper());
         return result;
     }
+
+    public StudentRegisteredCourse getCourseDetail(String studentId, String courseId){
+        String sql ="select rc.student_id, rc.course_id, crs.course_name, \n" +
+                "concat(std.first_name, std.last_name) as student_name, \n" +
+                "crs.course_name, rc.start_date, rc.end_date, rc.grade,rc.status \n" +
+                "from registered_courses rc \n" +
+                "Join student std on rc.student_id = std.student_id  \n" +
+                "Join courses crs on rc.course_id = crs.course_id  \n" +
+                "Where rc.student_id = :studentId and rc.course_id=:courseId ";
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("studentId", studentId);
+        params.put("courseId", courseId);
+
+        return (StudentRegisteredCourse) namedParameterJdbcTemplate.queryForObject(
+                sql ,
+                params, new StudentCourseMapper());
+    }
+
+
 }
